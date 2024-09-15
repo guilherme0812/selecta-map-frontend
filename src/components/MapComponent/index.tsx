@@ -146,88 +146,88 @@ function MapComponent() {
   );
 }
 
-function GeoJSONLayer({ data }: any) {
-  const map = useMap();
+// function GeoJSONLayer({ data }: any) {
+//   const map = useMap();
 
-  useEffect(() => {
-    // Dados para autenticação na API Zabbix
-    const loginData = {
-      jsonrpc: "2.0",
-      method: "user.login",
-      params: {
-        user: "api.maps.selecta",
-        password: "S@imon0918",
-      },
-      id: 2,
-    };
+//   useEffect(() => {
+//     // Dados para autenticação na API Zabbix
+//     const loginData = {
+//       jsonrpc: "2.0",
+//       method: "user.login",
+//       params: {
+//         user: "api.maps.selecta",
+//         password: "S@imon0918",
+//       },
+//       id: 2,
+//     };
 
-    // Realiza o login na API do Zabbix
-    fetch("http://128.201.99.152:9971/zabbix/api_jsonrpc.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginData),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        const authToken = result.result;
+//     // Realiza o login na API do Zabbix
+//     fetch("http://128.201.99.152:9971/zabbix/api_jsonrpc.php", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(loginData),
+//     })
+//       .then((response) => response.json())
+//       .then((result) => {
+//         const authToken = result.result;
 
-        const data = {
-          jsonrpc: "2.0",
-          method: "item.get",
-          params: {
-            output: ["itemid", "name", "key_", "lastvalue"],
-            hostids: "10562",
-            search: {
-              name: "Operational status",
-            },
-            sortfield: "name",
-          },
-          auth: authToken,
-          id: 3,
-        };
+//         const data = {
+//           jsonrpc: "2.0",
+//           method: "item.get",
+//           params: {
+//             output: ["itemid", "name", "key_", "lastvalue"],
+//             hostids: "10562",
+//             search: {
+//               name: "Operational status",
+//             },
+//             sortfield: "name",
+//           },
+//           auth: authToken,
+//           id: 3,
+//         };
 
-        // Faz a requisição para obter os itens
-        fetch("http://128.201.99.152:9971/zabbix/api_jsonrpc.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        })
-          .then((response) => response.json())
-          .then((result) => {
-            const desiredItemIds = ["56767", "1564059"];
+//         // Faz a requisição para obter os itens
+//         fetch("http://128.201.99.152:9971/zabbix/api_jsonrpc.php", {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify(data),
+//         })
+//           .then((response) => response.json())
+//           .then((result) => {
+//             const desiredItemIds = ["56767", "1564059"];
 
-            const filteredItems = result.result.filter((item) =>
-              desiredItemIds.includes(item.itemid)
-            );
+//             const filteredItems = result.result.filter((item) =>
+//               desiredItemIds.includes(item.itemid)
+//             );
 
-            filteredItems.forEach((item) => {
-              const status = item.lastvalue;
+//             filteredItems.forEach((item) => {
+//               const status = item.lastvalue;
 
-              map.eachLayer((layer) => {
-                if (layer.feature?.properties?.Name.includes(item.name)) {
-                  if (status === "1") {
-                    layer.setStyle({ color: "blue", weight: 4 });
-                  } else if (status === "2") {
-                    layer.setStyle({ color: "red", weight: 4 });
-                  }
-                }
-              });
-            });
-          })
-          .catch((error) => {
-            console.error("Erro ao buscar itens:", error);
-          });
-      })
-      .catch((error) => {
-        console.error("Erro ao fazer login:", error);
-      });
-  }, [map, data]);
+//               map.eachLayer((layer) => {
+//                 if (layer.feature?.properties?.Name.includes(item.name)) {
+//                   if (status === "1") {
+//                     layer.setStyle({ color: "blue", weight: 4 });
+//                   } else if (status === "2") {
+//                     layer.setStyle({ color: "red", weight: 4 });
+//                   }
+//                 }
+//               });
+//             });
+//           })
+//           .catch((error) => {
+//             console.error("Erro ao buscar itens:", error);
+//           });
+//       })
+//       .catch((error) => {
+//         console.error("Erro ao fazer login:", error);
+//       });
+//   }, [map, data]);
 
-  return <GeoJSON data={data} style={{ color: "blue", weight: 4 }} />;
-}
+//   return <GeoJSON data={data} style={{ color: "blue", weight: 4 }} />;
+// }
 
 export default MapComponent;

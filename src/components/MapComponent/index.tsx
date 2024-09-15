@@ -39,14 +39,14 @@ function MapComponent() {
   // Definindo ícones customizados
   const blueIcon = new Leaflet.Icon({
     iconUrl: "/icons/blue-icon.png", // Substitua pelo caminho do seu ícone
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
+    iconSize: [36, 36],
+    iconAnchor: [12, 36],
   });
 
   const redIcon = new Leaflet.Icon({
     iconUrl: "/icons/red-icon.png", // Substitua pelo caminho do seu ícone
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
+    iconSize: [36, 36],
+    iconAnchor: [12, 36],
   });
 
   // Função para definir estilo de linhas

@@ -60,13 +60,17 @@ function MapComponent() {
     feature: Feature<Geometry, any>,
     layer: Leaflet.Layer
   ) => {
+    console.log("feature", feature, "layer", layer);
     if (feature.geometry.type === "Point") {
       const icon = feature.properties.Name.includes("POP") ? blueIcon : redIcon;
       (layer as LeafletMarker<any>).setIcon(icon); // Define o ícone para o ponto
     }
 
     if (feature.geometry.type === "LineString") {
-      (layer as LeafletGeoJSON).setStyle(lineStyle); // Define o estilo da linha
+      (layer as LeafletGeoJSON).setStyle({
+        ...lineStyle,
+        className: "moving-dash",
+      }); // Define o estilo da linha
     }
 
     // Adiciona Popup a cada feature

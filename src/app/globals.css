@@ -98,3 +98,32 @@ body {
   left: 0;
   top: 0;
 }
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.blinking {
+  animation: blink 1s infinite;
+  stroke: red;
+}
+
+.moving-dash {
+  stroke-dasharray: 10, 10;
+  animation: dash 5s linear infinite alternate;
+  animation-duration: 5s;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
